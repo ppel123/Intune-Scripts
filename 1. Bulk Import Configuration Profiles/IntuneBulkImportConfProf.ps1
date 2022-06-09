@@ -24,7 +24,7 @@ $ConfigurationPolicies = (Invoke-MSGraphRequest -Url 'https://graph.microsoft.co
 try{
   foreach($policy in $ConfigurationPolicies){
 	$NewLine = "{0},{1}" -f $policy.displayName,$policy.id
-	$NewLine | add-content -path 'D:\Onedrive Personal\OneDrive\Projects\Intune Projects\1. Bulk import conf profiles\csvs\profiles.csv'
+	$NewLine | add-content -path 'PATH\TO\EXPORT\profiles.csv'
     write-host "Exported policy: $($policy.displayName)" -ForegroundColor green
     #Write-Host $policy.displayName,$policy.id
   }  
@@ -54,7 +54,7 @@ try{
 		$obj=New-Object PSObject -Property $Properties
         $array +=$obj 
 	}
-	$array | export-csv -Path 'D:\Onedrive Personal\OneDrive\Projects\Intune Projects\1. Bulk import conf profiles\csvs\groups.csv' -NoTypeInformation -Encoding UTF8
+	$array | export-csv -Path 'PATH\TO\EXPORT\groups.csv' -NoTypeInformation -Encoding UTF8
 }catch{
   write-host "Error: $($_.Exception.Message)" -ForegroundColor red
 }
@@ -72,7 +72,7 @@ try{
 # Now that the Excel is ready lets proceed to assigning the profiles to the groups in Intune
 ##################
 
-$path = "D:\Onedrive Personal\OneDrive\Projects\Intune Projects\1. Bulk import conf profiles\csvs\Profiles-Groups.csv"
+$path = "PATH\TO\LOAD\Profiles-Groups.csv"
 $csv = Import-Csv -path $path
 
 foreach($line in $csv)
