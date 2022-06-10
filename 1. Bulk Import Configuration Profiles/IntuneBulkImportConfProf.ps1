@@ -1,9 +1,15 @@
 ﻿# https://github.com/CloudSecuritea/O365ExportImport/blob/main/ExportAndImport/Intune/export-intune.ps1
 
+####################
+# install the required modules only the first time #
+####################
 Install-Module Microsoft.Graph -Scope CurrentUser
 Install-Module Microsoft.Graph.Intune
 Install-Module AzureAD
 
+####################
+# after installing all the modules proceed to importing them #
+####################
 Import-Module Microsoft.Graph
 Import-Module Microsoft.Graph.Intune
 Import-Module AzureAD
@@ -14,8 +20,11 @@ Import-Module AzureAD
 
 Connect-MSGraph
 
-#Configuration policies
+####################
+#Get all the Configuration policies
+####################
 $ConfigurationPolicies = (Invoke-MSGraphRequest -Url 'https://graph.microsoft.com/beta/deviceManagement/deviceConfigurations' -HttpMethod GET).Value
+
 ##################
 # Export to CSV #
 ##################
@@ -38,7 +47,9 @@ catch{
 ####################
 Connect-AzureAD -Confirm
 
-#Groups
+####################
+#Get all the Groups
+####################
 # https://stackoverflow.com/questions/58870231/export-all-azure-ad-groups-and-their-owner-to-a-csv-file
 try{
 	$array = @()
@@ -66,6 +77,8 @@ try{
 
 ##################
 # Create the Excel as you want
+# Go to the Excel file and add in the first column the configuration policy id you want and in the next columns add the Group IDs you 
+# want to have this policy
 ##################
 
 ##################
